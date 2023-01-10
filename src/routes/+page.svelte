@@ -1,7 +1,19 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+import { onMount } from "svelte";
+import { configApiData } from '../store';
+
+
+onMount(async () => {
+  fetch("http://localhost:4777/config")
+  .then(response => response.json())
+  .then(data => {
+        console.log(data);
+		configApiData.set(data);
+  }).catch(error => {
+    console.log(error);
+    return [];
+  });
+});
 </script>
 
 <svelte:head>
@@ -10,6 +22,9 @@
 </svelte:head>
 
 <section>
+
+	<p>{$configApiData?.player_file_path}</p>
+
 </section>
 
 <style>
