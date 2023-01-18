@@ -17,6 +17,7 @@
 }
 
 body {
+	font-family: "Andy";
 	min-height: 100vh;
 	margin: 0;
 	background-attachment: fixed;
@@ -54,9 +55,23 @@ h1 {
 	text-align: center;
 }
 
-h2 {
-	font-size: 1rem;
-}
+h2{
+	font-style: normal;
+	font-weight: 700;
+	font-size: 60px;
+	line-height: 90px;	
+	margin-block-start: 0;
+	margin-block-end: 0;
+
+	text-align: center;
+	letter-spacing: 0.005em;
+
+	color: #111111;
+
+	flex: none;
+	order: 0;
+	flex-grow: 0;
+	}
 
 pre {
 	font-size: 16px;
@@ -104,4 +119,18 @@ button:focus:not(:focus-visible) {
 	position: absolute;
 	width: 1px;
 	white-space: nowrap;
+}
+
+.body1{
+	font-style: normal;
+	font-size: 16px;
+	line-height: 24px;
+	text-align: center;
+	letter-spacing: 0.005em;
+
+	color: #111111;
+
+	flex: none;
+	order: 1;
+	flex-grow: 0;
 }
