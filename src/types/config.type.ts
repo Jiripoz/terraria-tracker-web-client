@@ -3,5 +3,11 @@ export type ServerConfig = {
 }
 
 export type OverviewConfig ={
-    player_file_path: string,
+    progress: string,
+    researched:string,
+    partially_researched:string
+}
+
+export type ItemProgressConfig ={
+    any:string,
 }

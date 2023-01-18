@@ -1,29 +1,37 @@
 <script>
 import { onMount } from "svelte";
-import { configApiData, configOverview} from '../store';
+import { configApiData, configOverview, itemsProgress} from '../store';
 
 onMount(async () => {
   fetch("http://localhost:4777/overview")
-  .then(response => response.json())
-  .then(data => {
-        console.log(data);
-		configOverview.set(data);
-  }).catch(error => {
-    console.log(error);
-    return [];
+	.then(response => response.json())
+	.then(data => {
+			console.log(data);
+			configOverview.set(data);
+	}).catch(error => {
+		console.log(error);
+		return [];
   });
+  fetch("http://localhost:4777/player")
+	.then(response => response.json())
+	.then(data => {
+			console.log(data);
+			configApiData.set(data);
+	}).catch(error => {
+		console.log(error);
+		return [];
+	});
+  fetch("http://localhost:4777/items-progress")
+	.then(response => response.json())
+	.then(data => {
+			console.log(data);
+			itemsProgress.set(data);
+	}).catch(error => {
+		console.log(error);
+		return [];
+	});
 });
-onMount(async () => {
-  fetch("http://localhost:4777/overview")
-  .then(response => response.json())
-  .then(data => {
-        console.log(data);
-		configApiData.set(data);
-  }).catch(error => {
-    console.log(error);
-    return [];
-  });
-});
+
 
 
 </script>
@@ -38,8 +46,19 @@ onMount(async () => {
 	<h2>{JSON.stringify($configOverview["progress"])}%</h2>
 	<sub class="body1"><span>{JSON.stringify($configOverview["researched"])}</span> items researched</sub>
 {/if}
-
 </section>
+
+<table>
+	<!-- {JSON.stringify($itemsProgress)} -->
+	{#each Object.keys($itemsProgress||{}) as k}
+		<tr>
+			<img class="pititito" src={$itemsProgress[k]}/>
+			<td>{k}</td>
+		</tr>
+	{/each}
+
+	</table>
+
 
 <style>
 	section{
@@ -67,5 +86,14 @@ onMount(async () => {
 		}
 	span{
 		font-weight: 700;
+	}
+	.teste{
+		display:flex;
+		margin-block-start: 0;
+    	margin-block-end: 0;
+	}
+	.pititito{
+		height:30px;
+		width: 30px;
 	}
 </style>
