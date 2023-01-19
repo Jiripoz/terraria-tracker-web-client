@@ -1,13 +1,13 @@
 <script>
 import { onMount } from "svelte";
-import { configApiData, configOverview, itemsProgress} from '../store';
+import { configApiData, overviewHighlights, itemsProgress} from '../store';
 
 onMount(async () => {
   fetch("http://localhost:4777/overview")
 	.then(response => response.json())
 	.then(data => {
 			console.log(data);
-			configOverview.set(data);
+			overviewHighlights.set(data);
 	}).catch(error => {
 		console.log(error);
 		return [];
@@ -42,22 +42,11 @@ onMount(async () => {
 </svelte:head>
 
 <section>
-{#if $configOverview}
-	<h2>{JSON.stringify($configOverview["progress"])}%</h2>
-	<sub class="body1"><span>{JSON.stringify($configOverview["researched"])}</span> items researched</sub>
+{#if $overviewHighlights}
+	<h2>{$overviewHighlights.progress.big}</h2>
+	<sub class="body1"><span>{$overviewHighlights.progress.small} {$overviewHighlights.progress.description} </span></sub>
 {/if}
 </section>
-
-<table>
-	<!-- {JSON.stringify($itemsProgress)} -->
-	{#each Object.keys($itemsProgress||{}) as k}
-		<tr>
-			<img class="pititito" src={$itemsProgress[k]}/>
-			<td>{k}</td>
-		</tr>
-	{/each}
-
-	</table>
 
 
 <style>
@@ -91,9 +80,5 @@ onMount(async () => {
 		display:flex;
 		margin-block-start: 0;
     	margin-block-end: 0;
-	}
-	.pititito{
-		height:30px;
-		width: 30px;
 	}
 </style>
