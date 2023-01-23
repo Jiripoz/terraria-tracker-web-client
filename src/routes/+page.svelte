@@ -1,6 +1,7 @@
 <script>
+	import Highlight from './Highlight.svelte';
 import { onMount } from "svelte";
-import { configApiData, overviewHighlights, itemsProgress} from '../store';
+import { configApiData, overviewHighlights, listofItems, itemProgress} from '../store';
 
 onMount(async () => {
   fetch("http://localhost:4777/overview")
@@ -12,7 +13,7 @@ onMount(async () => {
 		console.log(error);
 		return [];
   });
-  fetch("http://localhost:4777/player")
+  fetch("http://localhost:4777/config")
 	.then(response => response.json())
 	.then(data => {
 			console.log(data);
@@ -21,17 +22,25 @@ onMount(async () => {
 		console.log(error);
 		return [];
 	});
+  fetch("http://localhost:4777/items")
+	.then(response => response.json())
+	.then(data => {
+			console.log(data);
+			listofItems.set(data);
+	}).catch(error => {
+		console.log(error);
+		return [];
+	});
   fetch("http://localhost:4777/items-progress")
 	.then(response => response.json())
 	.then(data => {
 			console.log(data);
-			itemsProgress.set(data);
+			itemProgress.set(data);
 	}).catch(error => {
 		console.log(error);
 		return [];
 	});
 });
-
 
 
 </script>
@@ -41,44 +50,33 @@ onMount(async () => {
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section>
 {#if $overviewHighlights}
-	<h2>{$overviewHighlights.progress.big}</h2>
-	<sub class="body1"><span>{$overviewHighlights.progress.small} {$overviewHighlights.progress.description} </span></sub>
+<div class="highlight-list">
+	<div><Highlight {...$overviewHighlights.progress}></Highlight></div>
+	<div><Highlight {...$overviewHighlights.partially_researched}></Highlight></div>
+	<div><Highlight {...$overviewHighlights.absolute}></Highlight></div>
+	<div><Highlight {...$overviewHighlights.not_researched}></Highlight></div>
+	<div><Highlight {...$overviewHighlights.easy}></Highlight></div>
+</div>
 {/if}
-</section>
-
 
 <style>
-	section{
-
+	.highlight-list {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		flex-wrap: wrap;
 		justify-content: center;
-		align-items: center;
-		padding: 16px;
+		margin-left: -1em;
+		margin-right: -1em;
+		margin-top: -1em;
 
-		width: 255px;
-		height: 170px;
-
-		background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #111111;
-		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
-		border-radius: 16px;
-
-		flex: none;
-		order: 0;
-		flex-grow: 0;
-}
-
-	sub{
-		overflow: hidden;
-		}
-	span{
-		font-weight: 700;
 	}
-	.teste{
-		display:flex;
-		margin-block-start: 0;
-    	margin-block-end: 0;
+	.highlight-list > * {
+		margin-left: 1em;
+		margin-right: 1em;
+		margin-top: 1em;
+		
 	}
+
+
 </style>
