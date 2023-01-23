@@ -1,46 +1,17 @@
 <script>
-	import Highlight from './Highlight.svelte';
+	import { fetchConfig, fetchItems, fetchItemsProgress, fetchOverview } from './../lib/services/api_service';
+import Highlight from '../lib/components/Highlight.svelte';
 import { onMount } from "svelte";
-import { configApiData, overviewHighlights, listofItems, itemProgress} from '../store';
+import { configApiData, overviewHighlights, items, itemProgress} from '../lib/stores/store';
+
 
 onMount(async () => {
-  fetch("http://localhost:4777/overview")
-	.then(response => response.json())
-	.then(data => {
-			console.log(data);
-			overviewHighlights.set(data);
-	}).catch(error => {
-		console.log(error);
-		return [];
-  });
-  fetch("http://localhost:4777/config")
-	.then(response => response.json())
-	.then(data => {
-			console.log(data);
-			configApiData.set(data);
-	}).catch(error => {
-		console.log(error);
-		return [];
-	});
-  fetch("http://localhost:4777/items")
-	.then(response => response.json())
-	.then(data => {
-			console.log(data);
-			listofItems.set(data);
-	}).catch(error => {
-		console.log(error);
-		return [];
-	});
-  fetch("http://localhost:4777/items-progress")
-	.then(response => response.json())
-	.then(data => {
-			console.log(data);
-			itemProgress.set(data);
-	}).catch(error => {
-		console.log(error);
-		return [];
-	});
-});
+	fetchConfig();
+	const overviewItems = await fetchOverview();
+	overviewHighlights.set(overviewItems);
+	fetchItems();
+	fetchItemsProgress();
+})
 
 
 </script>
