@@ -6,7 +6,9 @@
 <header>
 	<div class="corner">
 		<a href="http://localhost:5173">
+			<div>
 			<img src={logo} alt="Terraria!" />
+			</div>
 		</a>
 	</div>
 

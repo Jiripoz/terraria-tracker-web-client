@@ -11,11 +11,10 @@ export const fetchOverview = async (): Promise<OverviewHighlights> => {
     return fetch(`${ROOT_URL}:${PORT}/overview`)
         .then(response => response.json())
         .then(data => {
-                console.log(data);
-                return data;
+            return data;
         }).catch(error => {
             console.log(error);
-            return {};
+            return undefined;
         });
 }
 
