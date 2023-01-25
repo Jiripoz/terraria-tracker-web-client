@@ -2,17 +2,18 @@
 	export const TABS = {};
 </script>
 
-<script>
+<script lang="ts">
 	import { setContext, onDestroy } from 'svelte';
-	import { writable } from 'svelte/store';
+	import { writable, type Writable } from 'svelte/store';
+	type TabID = Record<string, string>;
 
-	const tabs = [];
-	const panels = [];
-	const selectedTab = writable(null);
-	const selectedPanel = writable(null);
+	const tabs: TabID[] = [];
+	const panels: TabID[] = [];
+	const selectedTab: Writable<TabID | null> = writable(null);
+	const selectedPanel: Writable<TabID | null> = writable(null);
 
 	setContext(TABS, {
-		registerTab: tab => {
+		registerTab: (tab: TabID) => {
 			tabs.push(tab);
 			selectedTab.update(current => current || tab);
 			
@@ -23,7 +24,7 @@
 			});
 		},
 
-		registerPanel: panel => {
+		registerPanel: (panel: TabID) => {
 			panels.push(panel);
 			selectedPanel.update(current => current || panel);
 			
@@ -34,7 +35,7 @@
 			});
 		},
 
-		selectTab: tab => {
+		selectTab: (tab: TabID) => {
 			const i = tabs.indexOf(tab);
 			selectedTab.set(tab);
 			selectedPanel.set(panels[i]);

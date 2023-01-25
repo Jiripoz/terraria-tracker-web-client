@@ -1,6 +1,6 @@
 <script>
 import Highlight from '../lib/components/Highlight.svelte';
-import { Tabs, TabList, TabPanel, Tab } from '../lib/components/tabs/tabs.js';
+import { Tabs, TabList, TabPanel, Tab } from '../lib/components/tabs/tabs';
 
 
 
