@@ -1,7 +1,7 @@
 <script>
 import Highlight from '../lib/components/Highlight.svelte';
 import { Tabs, TabList, TabPanel, Tab } from '../lib/components/tabs/tabs';
-
+import Partially from '../lib/components/Partially.svelte';
 
 
 import {
@@ -29,7 +29,6 @@ onMount(setupDependencies);
         <div><Highlight {...$overviewStore.easy}></Highlight></div>
     </div>
     {/if}
-    
     <Tabs>
         <TabList>
             <div class="item-tab">
@@ -39,12 +38,16 @@ onMount(setupDependencies);
         </TabList>
     
         <TabPanel>
+            <Partially></Partially>
         </TabPanel>
     
         <TabPanel>
         </TabPanel>
 
-    </Tabs>    
+    </Tabs>
+
+    
+
 
 
 <style>

@@ -1,4 +1,4 @@
-export type Items = {
+export type Item = {
     id: string,
     name: string | undefined,
     internalName: string | undefined,
@@ -6,4 +6,4 @@ export type Items = {
     imageUrl: string | undefined,
     category: string | undefined,
     research: number | undefined,
-}[]
+}
