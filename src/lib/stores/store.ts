@@ -11,7 +11,7 @@ import { ItemsRepository } from '$lib/repositories/items_repository';
 export const configApiDataStore = writable<ServerConfig | undefined>(undefined);
 export const overviewStore = writable<OverviewHighlights | undefined>(undefined);
 export const itemProgressStore = writable<ItemsProgress | undefined>(undefined);
-export const itemsStore = writable<Item | undefined>(undefined);
+export const itemsStore = writable<Item[] | undefined>(undefined);
 
 export const setupDependencies = () => {
     const overviewRepositories = new OverviewRepository(overviewStore);

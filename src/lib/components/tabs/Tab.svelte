@@ -20,12 +20,12 @@
 		margin: 0;
 		color: #ccc;
 		width: 365px;
-		border-bottom: 8px solid #d9d9d9;
-		border-radius: 8px;
+		border-bottom: 0.5em solid #d9d9d9;
+		border-radius: 0.5em;
 	}
 	
 	.selected {
-		border-bottom: 8px solid #58355E;
+		border-bottom: 0.5em solid #58355E;
 		color: #333;
 ;
 	}
