@@ -1,23 +1,38 @@
 <script lang="ts">
-    export let name: string;
-    export let item_progress: number;
-    export let research_needed: number;
-    export let imageUrl: string;
-    export let itemUrl: string;
-    let link:string = "https://terraria.wiki.gg/images/"
+	import type { Item } from "src/types/item.type";
+	import Tag from "./tabs/Tag.svelte";
+    
+    export let item: Item;
+    const ROOT_URL:string = "https://terraria.wiki.gg/images/";
+    
+    let tagColor:string;
+    let tagText:string;
+
+    $: {
+        if (item.research==item.item_progress){
+            tagColor = "#47A025";
+            tagText = "Researched";
+        } else if (item.easy==true){
+            tagColor = "#79C4F2";
+            tagText = "Researchable";
+        } else {
+            tagColor = "#BA1B1D";
+            tagText = "Not Researched";
+    }
+}
 </script>
 
 <div class="item">
     <div class="top-container">
-        <img class="image" src={`${link}${imageUrl}`} alt={itemUrl} />
+        <img class="image" src={`${ROOT_URL}${item.imageUrl}`} alt={item.itemUrl} />
 
         <div class="right-upper-box">
-            <div class="research-progress">{item_progress}/{research_needed}</div>
-            <div class="research-status">Not researched</div>    
+            <div class="research-progress">{item.item_progress}/{item.research}</div>
+            <div class="research-status"><Tag --tag-color={tagColor} text={tagText}></Tag></div>    
         </div>
     </div>
     <div class="name-description">
-        <div class="item-name"><h5>{name}</h5></div>
+        <div class="item-name"><h5>{item.name}</h5></div>
         <div class="caption">descrição etc</div>
     </div>
     
@@ -79,19 +94,9 @@
 
 }
     .research-status {
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        padding: 6px 12px;
-        gap: 16px;
         width: auto;
         height: 33px;
-        background: #BA1B1D;
-        border: 3px solid #BA1B1D;
-        border-radius: 66px;
-        color: #FFFFFF;
+        box-sizing: border-box;
     }
     .name-description {
         display: flex;

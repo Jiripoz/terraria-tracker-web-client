@@ -2,7 +2,7 @@
     import ItemProgressList from './../lib/components/ItemProgressList.svelte';
     import Highlight from '../lib/components/Highlight.svelte';
     import { Tabs, TabList, TabPanel, Tab } from '../lib/components/tabs/tabs';
-    import { itemsStore } from '../lib/stores/store';
+    import { itemsDataStore } from '../lib/stores/store';
     import {
         overviewStore,
         setupDependencies
@@ -28,7 +28,7 @@
         <div><Highlight {...$overviewStore.easy}></Highlight></div>
     </div>
     {/if}
-    {#if $itemsStore}
+    {#if $itemsDataStore}
     <Tabs>
         <TabList>
             <div class="item-tab">
