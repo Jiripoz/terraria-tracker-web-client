@@ -1,19 +1,17 @@
 <script>
-	import { page } from '$app/stores';
-	import logo from '$lib/images/terraria.png'
+	import logo from '$lib/images/terraria.png';
 </script>
 
 <header>
 	<div class="corner">
 		<a href="http://localhost:5173">
 			<div>
-			<img src={logo} alt="Terraria!" />
+				<img src={logo} alt="Terraria!" />
 			</div>
 		</a>
 	</div>
 
-	<div class="corner">
-	</div>
+	<div class="corner" />
 </header>
 
 <style>

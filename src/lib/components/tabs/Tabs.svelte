@@ -15,23 +15,27 @@
 	setContext(TABS, {
 		registerTab: (tab: TabID) => {
 			tabs.push(tab);
-			selectedTab.update(current => current || tab);
-			
+			selectedTab.update((current) => current || tab);
+
 			onDestroy(() => {
 				const i = tabs.indexOf(tab);
 				tabs.splice(i, 1);
-				selectedTab.update(current => current === tab ? (tabs[i] || tabs[tabs.length - 1]) : current);
+				selectedTab.update((current) =>
+					current === tab ? tabs[i] || tabs[tabs.length - 1] : current
+				);
 			});
 		},
 
 		registerPanel: (panel: TabID) => {
 			panels.push(panel);
-			selectedPanel.update(current => current || panel);
-			
+			selectedPanel.update((current) => current || panel);
+
 			onDestroy(() => {
 				const i = panels.indexOf(panel);
 				panels.splice(i, 1);
-				selectedPanel.update(current => current === panel ? (panels[i] || panels[panels.length - 1]) : current);
+				selectedPanel.update((current) =>
+					current === panel ? panels[i] || panels[panels.length - 1] : current
+				);
 			});
 		},
 
@@ -47,5 +51,5 @@
 </script>
 
 <div class="tabs">
-	<slot></slot>
+	<slot />
 </div>
