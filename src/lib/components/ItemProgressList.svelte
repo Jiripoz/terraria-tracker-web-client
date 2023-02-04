@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { itemsStore } from './../stores/store';
 	import ItemProgress from './ItemProgress.svelte';
+	import { displayItems } from '../stores/filtered_items_store';
 </script>
 
 <div class="items-container">
-	{#if $itemsStore}
-		{#each $itemsStore as item}
+	{#if $displayItems}
+		{#each $displayItems as item}
 			<div class="item-wrapper">
 				<ItemProgress {item} />
 			</div>

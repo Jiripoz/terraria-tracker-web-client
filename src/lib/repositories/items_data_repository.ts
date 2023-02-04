@@ -1,3 +1,4 @@
+import { itemsListener } from '$lib/stores/filtered_items_store';
 import { fetchItems } from '../services/api_service';
 import type { ItemData } from 'src/types/item_data.type';
 import type { Writable } from 'svelte/types/runtime/store';

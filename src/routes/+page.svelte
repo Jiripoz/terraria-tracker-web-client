@@ -1,10 +1,13 @@
 <script>
+	import SearchBarFilter from '../lib/components/filters/SearchBarFilter.svelte';
 	import ItemProgressList from './../lib/components/ItemProgressList.svelte';
 	import Highlight from '../lib/components/Highlight.svelte';
 	import { Tabs, TabList, TabPanel, Tab } from '../lib/components/tabs/tabs';
 	import { itemsDataStore } from '../lib/stores/store';
 	import { overviewStore, setupDependencies } from '../lib/stores/store';
 	import { onMount } from 'svelte';
+	import ToggleEasy from '$lib/components/filters/ToggleEasy.svelte';
+	import ItemProgress from '$lib/components/ItemProgress.svelte';
 
 	onMount(setupDependencies);
 </script>
@@ -34,7 +37,9 @@
 
 		<div class="panel-container">
 			<TabPanel>
-				<ItemProgressList />
+				<ToggleEasy />
+				<SearchBarFilter />
+				<ItemProgressList></ItemProgressList>
 			</TabPanel>
 		</div>
 
@@ -43,6 +48,7 @@
 		</div>
 	</Tabs>
 {/if}
+
 
 <style>
 	.highlight-list {
