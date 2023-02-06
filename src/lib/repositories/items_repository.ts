@@ -4,6 +4,7 @@ import type { ItemData } from 'src/types/item_data.type';
 import type { Writable } from 'svelte/types/runtime/store';
 import { get } from 'svelte/store';
 import { itemsListener } from '$lib/stores/filtered_items_store';
+
 export class ItemsRepository {
 	constructor(
 		private itemsStore: Writable<Item[] | undefined>,
@@ -31,10 +32,23 @@ export class ItemsRepository {
 			this.refreshItems(itemsData, itemProgress);
 		});
 	}
-
+	find_index = (itemsData: ItemData[], id: number) => {
+		let index = 0;
+		for (let i = 0; i < itemsData.length; i++) {
+			if (itemsData[i]['id'] == id) {
+				index = i;
+				break;
+			}
+		}
+		return index;
+	};
 	async refreshItems(itemsData: ItemData[], itemProgress: ItemProgress) {
 		const researchedItems: Item[] = itemProgress.researched.map((itemId) => {
-			const itemData = itemsData[itemId - 1];
+			const ind = this.find_index(itemsData, itemId);
+			const itemData = itemsData[ind];
+			if (itemData == undefined) {
+				console.log('talvez esse seja o problema, o item id é: ', itemId, itemsData.length, ind);
+			}
 			return {
 				...itemData,
 				item_progress: itemData.research,
@@ -42,14 +56,16 @@ export class ItemsRepository {
 			};
 		});
 		const inProgressItems: Item[] = itemProgress.inProgress.map((itemDelta) => {
-			const itemData = itemsData[itemDelta.id - 1];
+			const ind = this.find_index(itemsData, itemDelta.id);
+			const itemData = itemsData[ind];
 			return {
 				...itemData,
 				...itemDelta
 			};
 		});
 		const notInProgressItems: Item[] = itemProgress.notInProgress.map((itemGama) => {
-			const itemData = itemsData[itemGama.id - 1];
+			const ind = this.find_index(itemsData, itemGama.id);
+			const itemData = itemsData[ind];
 			return {
 				...itemData,
 				...itemGama,

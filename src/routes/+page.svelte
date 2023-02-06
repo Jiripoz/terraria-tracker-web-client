@@ -1,4 +1,5 @@
 <script>
+	import PageSwitch from './../lib/components/filters/PageSwitch.svelte';
 	import SearchBarFilter from '../lib/components/filters/SearchBarFilter.svelte';
 	import ItemProgressList from './../lib/components/ItemProgressList.svelte';
 	import Highlight from '../lib/components/Highlight.svelte';
@@ -37,8 +38,11 @@
 
 		<div class="panel-container">
 			<TabPanel>
-				<ToggleEasy />
-				<SearchBarFilter />
+				<div class="filters-container">
+					<div class="search-filter"><SearchBarFilter /></div>
+					<div class="easy-filter"><ToggleEasy /></div>
+					<div class="page-switch"><PageSwitch></PageSwitch></div>
+				</div>
 				<ItemProgressList></ItemProgressList>
 			</TabPanel>
 		</div>
@@ -80,6 +84,61 @@
 		margin-left: 32px;
 	}
 	.panel-container {
+		display: flex;
+		flex-direction: column;
 		margin-top: 2em;
+		padding: 0 4em;
+		justify-content: center;
+		align-items: center;
+	}
+	.filters-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		padding: 0 4em;
+		gap: 32px;
+		flex-grow:1;
+		width:80%;
+		margin-bottom: 2em;
+
+	}
+	.search-filter {
+		display: flex;
+		flex-grow: 1;
+		flex-direction: row;
+		align-items: center;
+		padding: 1em;
+		gap: 1em;
+
+
+		background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #111111;
+
+		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
+		border-radius: 100px;
+	}
+	.easy-filter {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding: 0.75em 1em;
+		gap: 8px;
+		background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #111111;
+
+		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
+		border-radius: 100px;
+	}
+	.page-switch {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		padding: 1em;
+		gap: 16px;
+
+		background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #111111;
+
+		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
+		border-radius: 100px;
 	}
 </style>

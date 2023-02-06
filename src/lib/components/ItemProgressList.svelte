@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { itemsStore } from './../stores/store';
 	import ItemProgress from './ItemProgress.svelte';
 	import { displayItems } from '../stores/filtered_items_store';
 </script>

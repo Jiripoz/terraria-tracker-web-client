@@ -1,9 +1,15 @@
 export type ItemData = {
+	category: [];
+	consumable: boolean;
+	hardmode: boolean;
 	id: number;
-	name: string;
+	imageUrl: string;
+	imagefile: string;
 	internalName: string;
 	itemUrl: string;
-	imageUrl: string;
-	category: string;
+	name: string;
+	rare: number;
 	research: number;
+	tags: [];
+	tooltip: string;
 };
