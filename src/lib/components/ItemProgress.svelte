@@ -3,7 +3,6 @@
 	import Tag from './tabs/Tag.svelte';
 
 	export let item: Item;
-	const ROOT_URL = 'https://terraria.wiki.gg/images/';
 
 	let tagColor: string;
 	let tagText: string;
@@ -45,7 +44,7 @@
 <style>
 	.caption {
 		text-align: center;
-		height: 2.5em;	
+		height: 2.5em;
 		overflow: hidden;
 	}
 	.item {

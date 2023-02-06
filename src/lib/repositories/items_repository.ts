@@ -3,7 +3,6 @@ import type { Item } from 'src/types/item.type';
 import type { ItemDataResponse } from 'src/types/item_data.type';
 import type { Writable } from 'svelte/types/runtime/store';
 import { get } from 'svelte/store';
-import { itemsListener } from '$lib/stores/filtered_items_store';
 
 export class ItemsRepository {
 	constructor(
@@ -58,7 +57,7 @@ export class ItemsRepository {
 			};
 		});
 		const itemList = researchedItems.concat(inProgressItems, notInProgressItems);
-		itemsListener(itemList);
+		console.log('eu entro aqui?');
 		this.itemsStore.set(itemList);
 	}
 }

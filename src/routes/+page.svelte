@@ -8,7 +8,6 @@
 	import { overviewStore, setupDependencies } from '../lib/stores/store';
 	import { onMount } from 'svelte';
 	import ToggleEasy from '$lib/components/filters/ToggleEasy.svelte';
-	import ItemProgress from '$lib/components/ItemProgress.svelte';
 
 	onMount(setupDependencies);
 </script>
@@ -41,9 +40,9 @@
 				<div class="filters-container">
 					<div class="search-filter"><SearchBarFilter /></div>
 					<div class="easy-filter"><ToggleEasy /></div>
-					<div class="page-switch"><PageSwitch></PageSwitch></div>
+					<div class="page-switch"><PageSwitch /></div>
 				</div>
-				<ItemProgressList></ItemProgressList>
+				<ItemProgressList />
 			</TabPanel>
 		</div>
 
@@ -52,7 +51,6 @@
 		</div>
 	</Tabs>
 {/if}
-
 
 <style>
 	.highlight-list {
@@ -98,10 +96,9 @@
 		align-items: center;
 		padding: 0 4em;
 		gap: 32px;
-		flex-grow:1;
-		width:80%;
+		flex-grow: 1;
+		width: 80%;
 		margin-bottom: 2em;
-
 	}
 	.search-filter {
 		display: flex;
@@ -111,8 +108,7 @@
 		padding: 1em;
 		gap: 1em;
 
-
-		background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #111111;
+		background: linear-gradient(0deg, #ffffff, #ffffff), #111111;
 
 		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
 		border-radius: 100px;
@@ -123,7 +119,7 @@
 		align-items: center;
 		padding: 0.75em 1em;
 		gap: 8px;
-		background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #111111;
+		background: linear-gradient(0deg, #ffffff, #ffffff), #111111;
 
 		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
 		border-radius: 100px;
@@ -136,7 +132,7 @@
 		padding: 1em;
 		gap: 16px;
 
-		background: linear-gradient(0deg, #FFFFFF, #FFFFFF), #111111;
+		background: linear-gradient(0deg, #ffffff, #ffffff), #111111;
 
 		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
 		border-radius: 100px;
