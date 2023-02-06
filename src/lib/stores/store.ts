@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import type { ServerConfig } from '../../types/server_config.type';
 import type { OverviewHighlights } from 'src/types/overview.type';
 import type { ItemProgress } from 'src/types/items_progress.type';
-import type { ItemData } from 'src/types/item_data.type';
+import type { ItemDataResponse } from 'src/types/item_data.type';
 import type { Item } from 'src/types/item.type';
 
 import { OverviewRepository } from '$lib/repositories/overview_repository';
@@ -13,7 +13,7 @@ import { ItemsRepository } from '$lib/repositories/items_repository';
 export const configApiDataStore = writable<ServerConfig | undefined>(undefined);
 export const overviewStore = writable<OverviewHighlights | undefined>(undefined);
 export const itemProgressStore = writable<ItemProgress | undefined>(undefined);
-export const itemsDataStore = writable<ItemData[] | undefined>(undefined);
+export const itemsDataStore = writable<ItemDataResponse | undefined>(undefined);
 export const itemsStore = writable<Item[] | undefined>(undefined);
 
 export const setupDependencies = () => {

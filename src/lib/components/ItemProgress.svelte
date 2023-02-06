@@ -3,7 +3,6 @@
 	import Tag from './tabs/Tag.svelte';
 
 	export let item: Item;
-	const ROOT_URL = 'https://terraria.wiki.gg/images/';
 
 	let tagColor: string;
 	let tagText: string;
@@ -24,7 +23,7 @@
 
 <div class="item">
 	<div class="top-container">
-		<img class="image" src={`${ROOT_URL}${item.imageUrl}`} alt={item.itemUrl} />
+		<img class="image" src={`${item.imageUrl}`} alt={item.itemUrl} />
 
 		<div class="right-upper-box">
 			<div class="research-progress">{item.item_progress}/{item.research}</div>
@@ -33,7 +32,7 @@
 	</div>
 	<div class="name-description">
 		<div class="item-name"><h5>{item.name}</h5></div>
-		<div class="caption">descrição etc</div>
+		<div class="caption">{item.tooltip}</div>
 	</div>
 
 	<div class="bottom-container">
@@ -43,6 +42,11 @@
 </div>
 
 <style>
+	.caption {
+		text-align: center;
+		height: 2.5em;
+		overflow: hidden;
+	}
 	.item {
 		display: flex;
 		flex-direction: column;
@@ -50,8 +54,8 @@
 		align-items: center;
 		padding: 2em;
 		gap: 2em;
-		width: 352.67px;
-		height: 287px;
+		width: 360px;
+		height: 310px;
 		box-sizing: border-box;
 		background: linear-gradient(0deg, #ffffff, #ffffff), #111111;
 		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
@@ -92,19 +96,20 @@
 	}
 	.research-status {
 		width: auto;
-		height: 33px;
 		box-sizing: border-box;
 	}
 	.name-description {
 		display: flex;
 		flex-direction: column;
-		align-items: flex-end;
+		align-items: center;
+		text-align: center;
 		padding: 0px;
 		gap: 10px;
 	}
 	.item-name {
 		margin-top: 0;
 		margin-bottom: 0;
+		text-align: center;
 	}
 	.bottom-container {
 		display: flex;

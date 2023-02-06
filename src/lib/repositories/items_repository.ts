@@ -1,12 +1,13 @@
 import type { ItemProgress } from 'src/types/items_progress.type';
 import type { Item } from 'src/types/item.type';
-import type { ItemData } from 'src/types/item_data.type';
+import type { ItemDataResponse } from 'src/types/item_data.type';
 import type { Writable } from 'svelte/types/runtime/store';
 import { get } from 'svelte/store';
+
 export class ItemsRepository {
 	constructor(
 		private itemsStore: Writable<Item[] | undefined>,
-		itemsDataStore: Writable<ItemData[] | undefined>,
+		itemsDataStore: Writable<ItemDataResponse | undefined>,
 		itemProgressStore: Writable<ItemProgress | undefined>
 	) {
 		itemsDataStore.subscribe((itemsData) => {
@@ -31,9 +32,9 @@ export class ItemsRepository {
 		});
 	}
 
-	async refreshItems(itemsData: ItemData[], itemProgress: ItemProgress) {
+	async refreshItems(itemsData: ItemDataResponse, itemProgress: ItemProgress) {
 		const researchedItems: Item[] = itemProgress.researched.map((itemId) => {
-			const itemData = itemsData[itemId - 1];
+			const itemData = itemsData[itemId];
 			return {
 				...itemData,
 				item_progress: itemData.research,
@@ -41,20 +42,22 @@ export class ItemsRepository {
 			};
 		});
 		const inProgressItems: Item[] = itemProgress.inProgress.map((itemDelta) => {
-			const itemData = itemsData[itemDelta.id - 1];
+			const itemData = itemsData[itemDelta.id];
 			return {
 				...itemData,
 				...itemDelta
 			};
 		});
 		const notInProgressItems: Item[] = itemProgress.notInProgress.map((itemGama) => {
-			const itemData = itemsData[itemGama.id - 1];
+			const itemData = itemsData[itemGama.id];
 			return {
 				...itemData,
 				...itemGama,
 				item_progress: 0
 			};
 		});
-		this.itemsStore.set(researchedItems.concat(inProgressItems, notInProgressItems));
+		const itemList = researchedItems.concat(inProgressItems, notInProgressItems);
+		console.log('eu entro aqui?');
+		this.itemsStore.set(itemList);
 	}
 }

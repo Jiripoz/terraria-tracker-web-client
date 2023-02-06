@@ -1,9 +1,16 @@
 export type ItemData = {
-	id: number;
-	name: string;
+	category: [];
+	consumable: boolean;
+	hardmode: boolean;
+	imageUrl: string;
+	imagefile: string;
 	internalName: string;
 	itemUrl: string;
-	imageUrl: string;
-	category: string;
+	name: string;
+	rare: number;
 	research: number;
+	tags: [];
+	tooltip: string;
 };
+
+export type ItemDataResponse = Record<string, ItemData>;

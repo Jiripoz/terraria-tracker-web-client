@@ -1,6 +1,6 @@
 import type { OverviewHighlights } from 'src/types/overview.type';
 import type { ServerConfig } from 'src/types/server_config.type';
-import type { ItemData } from 'src/types/item_data.type';
+import type { ItemDataResponse } from 'src/types/item_data.type';
 import type { ItemProgress } from 'src/types/items_progress.type';
 
 const ROOT_URL = 'http://localhost';
@@ -31,7 +31,7 @@ export const fetchConfig = async (): Promise<ServerConfig> => {
 		});
 };
 
-export const fetchItems = async (): Promise<ItemData[]> => {
+export const fetchItems = async (): Promise<ItemDataResponse> => {
 	return fetch(`${ROOT_URL}:${PORT}/items`)
 		.then((response) => response.json())
 		.then((data) => {
