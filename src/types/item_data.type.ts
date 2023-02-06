@@ -2,7 +2,6 @@ export type ItemData = {
 	category: [];
 	consumable: boolean;
 	hardmode: boolean;
-	id: number;
 	imageUrl: string;
 	imagefile: string;
 	internalName: string;
@@ -13,3 +12,5 @@ export type ItemData = {
 	tags: [];
 	tooltip: string;
 };
+
+export type ItemDataResponse = Record<string, ItemData>;
