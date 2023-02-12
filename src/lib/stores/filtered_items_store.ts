@@ -1,15 +1,14 @@
 import { derived, writable, get } from 'svelte/store';
-import { itemsStore } from './store';
-
 import { filterStore } from './filter_store';
+import { itemsRepository } from './di';
 
-export const filteredItemsStore = derived(
-	[filterStore, itemsStore],
-	([$filterStore, $itemsStore]) => {
-		if (!$itemsStore) {
+export const filtereditemStore = derived(
+	[filterStore, itemsRepository.itemsStore],
+	([$filterStore, $itemStore]) => {
+		if (!$itemStore) {
 			return [];
 		}
-		let filteredItems = $itemsStore;
+		let filteredItems = Object.values($itemStore);
 		if ($filterStore.easy == true) {
 			filteredItems = filteredItems.filter((item) => item['easy']);
 		}

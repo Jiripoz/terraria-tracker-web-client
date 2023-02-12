@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { Item } from 'src/types/item.type';
-	import Tag from './tabs/Tag.svelte';
+	import Tag from '../components/tabs/Tag.svelte';
 
 	export let item: Item;
-
+	const ROOT_URL = 'https://terraria.wiki.gg/images/';
 	let tagColor: string;
 	let tagText: string;
 
@@ -23,7 +23,7 @@
 
 <div class="item">
 	<div class="top-container">
-		<img class="image" src={`${item.imageUrl}`} alt={item.itemUrl} />
+		<img class="image" src={`${ROOT_URL}${item.imageUrl}`} alt={item.itemUrl} />
 
 		<div class="right-upper-box">
 			<div class="research-progress">{item.item_progress}/{item.research}</div>
