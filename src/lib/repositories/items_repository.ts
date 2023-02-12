@@ -1,63 +1,52 @@
-import type { ItemProgress } from 'src/types/items_progress.type';
 import type { Item } from 'src/types/item.type';
-import type { ItemDataResponse } from 'src/types/item_data.type';
-import type { Writable } from 'svelte/types/runtime/store';
-import { get } from 'svelte/store';
+import type { Readable } from 'svelte/types/runtime/store';
+import { derived } from 'svelte/store';
+import type { ItemsDataRepository } from './items_data_repository';
+import type { ItemsProgressRepository } from './items_progress_repository';
 
 export class ItemsRepository {
 	constructor(
-		private itemsStore: Writable<Item[] | undefined>,
-		itemsDataStore: Writable<ItemDataResponse | undefined>,
-		itemProgressStore: Writable<ItemProgress | undefined>
+		itemDataRepository: ItemsDataRepository,
+		itemProgressRepository: ItemsProgressRepository
 	) {
-		itemsDataStore.subscribe((itemsData) => {
-			if (!itemsData) {
-				return;
+		this.itemsStore = derived(
+			[itemDataRepository.store, itemProgressRepository.store],
+			([$itemsDataStore, $itemProgressStore]) => {
+				if ($itemsDataStore == undefined || $itemProgressStore == undefined) {
+					return [];
+				}
+				const itemsDict: Record<number, Item> = {};
+				$itemProgressStore.researched.forEach((itemId) => {
+					const itemData = $itemsDataStore[itemId];
+					const item = {
+						...itemData,
+						item_progress: itemData.research,
+						easy: false
+					};
+					itemsDict[item.id] = item;
+				});
+				$itemProgressStore.inProgress.forEach((itemDelta) => {
+					const itemData = $itemsDataStore[itemDelta.id];
+					const item = {
+						...itemData,
+						...itemDelta
+					};
+					itemsDict[item.id] = item;
+				});
+				$itemProgressStore.notInProgress.forEach((itemGama) => {
+					const itemData = $itemsDataStore[itemGama.id];
+					const item = {
+						...itemData,
+						...itemGama,
+						item_progress: 0
+					};
+					itemsDict[item.id] = item;
+				});
+				console.log('cintura solta dançar kuduro', itemsDict);
+				return itemsDict;
 			}
-			const itemProgress = get(itemProgressStore);
-			if (!itemProgress) {
-				return;
-			}
-			this.refreshItems(itemsData, itemProgress);
-		});
-		itemProgressStore.subscribe((itemProgress) => {
-			if (!itemProgress) {
-				return;
-			}
-			const itemsData = get(itemsDataStore);
-			if (!itemsData) {
-				return;
-			}
-			this.refreshItems(itemsData, itemProgress);
-		});
+		);
 	}
 
-	async refreshItems(itemsData: ItemDataResponse, itemProgress: ItemProgress) {
-		const researchedItems: Item[] = itemProgress.researched.map((itemId) => {
-			const itemData = itemsData[itemId];
-			return {
-				...itemData,
-				item_progress: itemData.research,
-				easy: false
-			};
-		});
-		const inProgressItems: Item[] = itemProgress.inProgress.map((itemDelta) => {
-			const itemData = itemsData[itemDelta.id];
-			return {
-				...itemData,
-				...itemDelta
-			};
-		});
-		const notInProgressItems: Item[] = itemProgress.notInProgress.map((itemGama) => {
-			const itemData = itemsData[itemGama.id];
-			return {
-				...itemData,
-				...itemGama,
-				item_progress: 0
-			};
-		});
-		const itemList = researchedItems.concat(inProgressItems, notInProgressItems);
-		console.log('eu entro aqui?');
-		this.itemsStore.set(itemList);
-	}
+	public itemsStore: Readable<Record<number, Item> | undefined>;
 }

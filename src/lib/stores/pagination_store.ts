@@ -1,15 +1,11 @@
 import { derived, get, writable } from 'svelte/store';
-
-import { filteredItemsStore } from './filtered_items_store';
+import { filtereditemStore } from './filtered_items_store';
 
 export const ITEMS_PER_PAGE = 20;
-
-export const maxPageStore = derived(filteredItemsStore, ($filteredItemsStore) =>
-	Math.ceil($filteredItemsStore.length / ITEMS_PER_PAGE)
+export const maxPageStore = derived(filtereditemStore, ($filtereditemStore) =>
+	Math.ceil($filtereditemStore.length / ITEMS_PER_PAGE)
 );
-
 export const currentPageStore = writable<number>(1);
-
 maxPageStore.subscribe(() => {
 	currentPageStore.set(1);
 });

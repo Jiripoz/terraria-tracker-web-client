@@ -1,14 +1,22 @@
 <script>
 	import PageSwitch from './../lib/components/filters/PageSwitch.svelte';
 	import SearchBarFilter from '../lib/components/filters/SearchBarFilter.svelte';
-	import ItemProgressList from './../lib/components/ItemProgressList.svelte';
 	import Highlight from '../lib/components/Highlight.svelte';
 	import { Tabs, TabList, TabPanel, Tab } from '../lib/components/tabs/tabs';
-	import { itemsDataStore } from '../lib/stores/store';
-	import { overviewStore, setupDependencies } from '../lib/stores/store';
+	import {
+		setupDependencies,
+		itemsDataRepository,
+		stationsRepository,
+		itemProgressRepository,
+		overviewRepository
+	} from '../lib/stores/di';
 	import { onMount } from 'svelte';
 	import ToggleEasy from '$lib/components/filters/ToggleEasy.svelte';
+	import ItemProgressList from '$lib/items/ItemProgressList.svelte';
+	import CraftingStationList from '$lib/components/stations/CraftingStationList.svelte';
 
+	const overviewStore = overviewRepository.store;
+	const itemsDataStore = itemsDataRepository.store;
 	onMount(setupDependencies);
 </script>
 
@@ -27,6 +35,7 @@
 	</div>
 {/if}
 {#if $itemsDataStore}
+	
 	<Tabs>
 		<TabList>
 			<div class="item-tab">
@@ -47,7 +56,9 @@
 		</div>
 
 		<div class="panel-container">
-			<TabPanel />
+			<TabPanel>
+				<div class="crafting-station-list"><CraftingStationList /></div>
+			</TabPanel>
 		</div>
 	</Tabs>
 {/if}
@@ -136,5 +147,12 @@
 
 		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
 		border-radius: 100px;
+	}
+	.crafting-station-list{
+		display:flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 1em;
+		justify-content: center;
 	}
 </style>

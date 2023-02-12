@@ -1,4 +1,5 @@
 export type ItemData = {
+	id: number;
 	category: [];
 	consumable: boolean;
 	hardmode: boolean;
