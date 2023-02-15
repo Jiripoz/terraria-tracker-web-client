@@ -1,4 +1,4 @@
-import { derived, writable, get } from 'svelte/store';
+import { derived } from 'svelte/store';
 import { filterStore } from './filter_store';
 import { itemsRepository } from './di';
 

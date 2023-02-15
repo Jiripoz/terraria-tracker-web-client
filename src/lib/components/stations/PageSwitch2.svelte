@@ -1,14 +1,16 @@
 <script lang="ts">
-	import { nPage, pPage } from '$lib/repositories/stations_repository';
+	import { createEventDispatcher } from 'svelte';
+	import type { Writable, Readable } from 'svelte/store';
 
-	export let currentPage: number;
-	export let maxPages: number;
-	export let stationId: number;
+	export let currentPage: Writable<number>;
+	export let maxPages: Readable<number>;
+
+	const dispatch = createEventDispatcher();
 </script>
 
-<button class="arrow left" on:click={() => pPage(stationId)} />
-<div>{currentPage}/{maxPages}</div>
-<button class="arrow right" on:click={() => nPage(stationId)} />
+<button class="arrow left" on:click={() => dispatch('previousPage')} />
+<div>{$currentPage}/{$maxPages}</div>
+<button class="arrow right" on:click={() => dispatch('nextPage')} />
 
 <style>
 	.arrow {

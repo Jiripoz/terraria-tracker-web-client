@@ -1,8 +1,7 @@
 <script lang="ts">
-	import type { Readable } from 'svelte/types/runtime/store';
+	import type { Readable, Writable } from 'svelte/types/runtime/store';
 	import PageSwitch2 from './PageSwitch2.svelte';
-	import { stationsMaxPage, stationsCurrentPage } from '$lib/repositories/stations_repository';
-	import type { DisplayedStationItemsRepository } from '$lib/repositories/displayed_station_items_repository';
+	import type { StationItemsRepository } from '$lib/repositories/stations_repository';
 	import type { StationDisplay } from 'src/types/stations.type';
 	import Tag from '../tabs/Tag.svelte';
 
@@ -14,19 +13,24 @@
 	export let easy: boolean;
 	export let special: boolean;
 	// export let easy: boolean;
-	export let repository: DisplayedStationItemsRepository;
+	export let repository: StationItemsRepository;
 	let store: Readable<StationDisplay[]> | undefined;
+	let currentPage: Writable<number>;
+	let maxPage: Readable<number>;
+
 	const ROOT_URL = 'https://terraria.wiki.gg/images/';
 	$: {
-		store = repository.store;
+		store = repository.displayedItems;
+		currentPage = repository.currentPage;
+		maxPage = repository.maxPage;
 	}
 	let tagColor: string;
 	let tagText: string;
 
 	$: {
-		if(special==true){
-			tagColor='#666';
-			tagText='Special';
+		if (special == true) {
+			tagColor = '#666';
+			tagText = 'Special';
 		} else if (research == progress) {
 			tagColor = '#47A025';
 			tagText = 'Researched';
@@ -48,7 +52,7 @@
 		</div>
 		<div class="upper-right">
 			<div class="research-progress"><h4>{progress}/{research}</h4></div>
-			<div class="research-status"><Tag --tag-color={tagColor} text={tagText}/></div>
+			<div class="research-status"><Tag --tag-color={tagColor} text={tagText} /></div>
 		</div>
 	</div>
 
@@ -57,22 +61,22 @@
 			<h6>Craftables</h6>
 			<div class="page-switch">
 				<PageSwitch2
-					currentPage={$stationsCurrentPage[id]}
-					maxPages={$stationsMaxPage[id]}
-					stationId={id}
+					currentPage={currentPage}
+					maxPages={maxPage}
+					on:nextPage={repository.nPage}
+					on:previousPage={repository.pPage}
 				/>
 			</div>
 		</div>
 		<div class="craftable-list">
-				{#if $store}
-					{#each $store as object}
-						<div class="craftable-row">
-							<img class="item-image" src={`${ROOT_URL}${object.imageUrl}`} alt="" />
-							<div class="item-name">{object.name}</div>
-						</div>
-						{/each}
-				{/if}
-
+			{#if $store}
+				{#each $store as object}
+					<div class="craftable-row">
+						<img class="item-image" src={`${ROOT_URL}${object.imageUrl}`} alt="" />
+						<div class="item-name">{object.name}</div>
+					</div>
+				{/each}
+			{/if}
 		</div>
 	</div>
 </div>
@@ -97,7 +101,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: flex-start;
-	    justify-content: space-between;
+		justify-content: space-between;
 		width: 520px;
 		height: 105px;
 	}
@@ -106,11 +110,11 @@
 		flex-direction: row;
 		align-items: flex-start;
 		gap: 1em;
-		
+
 		width: 346px;
 		height: 105px;
 	}
-	.station-image{
+	.station-image {
 		display: flex;
 		flex-direction: row;
 		align-items: flex-start;
@@ -162,7 +166,7 @@
 		width: 92px;
 		height: 51px;
 	}
-	.research-status{
+	.research-status {
 		display: flex;
 		flex-direction: row;
 		justify-content: right;
@@ -192,7 +196,6 @@
 
 		width: 61px;
 		height: 15px;
-
 	}
 	.craftable-list {
 		display: grid;
@@ -205,13 +208,13 @@
 		gap: 0.5em;
 	}
 	.item-image {
-		display:flex;
+		display: flex;
 		width: 25px;
 		height: 25px;
 		padding-right: 5px;
 		object-fit: contain;
 	}
-	.item-name{
+	.item-name {
 		overflow: hidden;
 		height: 25px;
 	}

@@ -6,8 +6,6 @@
 	import {
 		setupDependencies,
 		itemsDataRepository,
-		stationsRepository,
-		itemProgressRepository,
 		overviewRepository
 	} from '../lib/stores/di';
 	import { onMount } from 'svelte';
@@ -35,7 +33,6 @@
 	</div>
 {/if}
 {#if $itemsDataStore}
-	
 	<Tabs>
 		<TabList>
 			<div class="item-tab">
@@ -57,6 +54,7 @@
 
 		<div class="panel-container">
 			<TabPanel>
+				calos tiloco
 				<div class="crafting-station-list"><CraftingStationList /></div>
 			</TabPanel>
 		</div>
@@ -148,8 +146,8 @@
 		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
 		border-radius: 100px;
 	}
-	.crafting-station-list{
-		display:flex;
+	.crafting-station-list {
+		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
 		gap: 1em;

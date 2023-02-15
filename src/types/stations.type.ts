@@ -7,11 +7,11 @@ export type Station = {
 	craftables: number[];
 };
 
-export type Ingredient = {
-	amount: number;
+export type StationHeader = {
 	id: number;
 	name: string;
-}[];
+	imageUrl: string;
+};
 
 export type StationProgress = {
 	progress: number;
