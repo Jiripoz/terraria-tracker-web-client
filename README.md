@@ -2,9 +2,8 @@
 
 ## Installation
 
-This project requires the `npm` package manager. You will need to install [node.js](https://nodejs.org/en/download/) to run `npm` commands.
-
-When you are ready, just run on the project foler:
+This project requires the `npm` package manager.
+Run on the project folder:
 
 ```
 npm install
@@ -12,13 +11,16 @@ npm install
 
 ## Usage
 
-To build the web client run the following command on the project folder:
+Run the following command on the project folder:
 
 ```sh
 npm run dev
 ```
 
 You can access access it on http://localhost:5173/.
+
+You also need to run the [server](https://github.com/Jiripoz/terraria-journey-tracker-server) at the same time.
+
 
 If you want to change the port, you can do it on `$src/lib/routes/Header.svelte`
 
