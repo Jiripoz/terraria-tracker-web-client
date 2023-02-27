@@ -1,38 +1,27 @@
-# create-svelte
+# Terraria Journey Tracker - Web Client
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Installation
 
-## Creating a project
+This project requires the `npm` package manager. You will need to install [node.js](https://nodejs.org/en/download/) to run `npm` commands.
 
-If you're seeing this, you've probably already done this step. Congrats!
+When you are ready, just run on the project foler:
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+```
+npm install
 ```
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+To build the web client run the following command on the project folder:
 
-```bash
+```sh
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+You can access access it on http://localhost:5173/.
 
-To create a production version of your app:
+If you want to change the port, you can do it on `$src/lib/routes/Header.svelte`
 
-```bash
-npm run build
-```
+## License
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+[MIT](https://choosealicense.com/licenses/mit/)
