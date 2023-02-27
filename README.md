@@ -17,9 +17,9 @@ Run the following command on the project folder:
 npm run dev
 ```
 
-You can access access it on http://localhost:5173/.
+Done! The web client will be available on http://localhost:5173/.
 
-You will also need to run the [server](https://github.com/Jiripoz/terraria-journey-tracker-server).
+You also need to run the [server](https://github.com/Jiripoz/terraria-journey-tracker-server).
 
 
 If you want to change the port, you can do it on `$src/lib/routes/Header.svelte`
