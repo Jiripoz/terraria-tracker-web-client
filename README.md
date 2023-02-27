@@ -19,7 +19,7 @@ npm run dev
 
 You can access access it on http://localhost:5173/.
 
-You also need to run the [server](https://github.com/Jiripoz/terraria-journey-tracker-server) at the same time.
+You will also need to run the [server](https://github.com/Jiripoz/terraria-journey-tracker-server).
 
 
 If you want to change the port, you can do it on `$src/lib/routes/Header.svelte`
