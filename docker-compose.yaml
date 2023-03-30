@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  web:
+    image: "enzomaruffa/terraria-tracker-web-client:0.0.1"
+    ports:
+      - "5173:5173" 
+  server:
+    image: "enzomaruffa/terraria-journey-tracker-server:0.0.1"
+    ports:
+      - "4777:4777"
+    command: "/opt/player.plr"
+    volumes:
+      - type: bind
+        source: /Users/enzolitos/terraria-tracker/players/Tubarao_Tobias.plr
+        target: /opt/player.plr
+
+volumes:
+  terraria-tracker:
