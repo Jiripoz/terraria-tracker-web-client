@@ -28,5 +28,9 @@ export type StationDisplay = {
 	id: number;
 	name: string;
 	imageUrl: string;
+	research: string;
+	item_progress: string;
 	easy: boolean;
 };
+
+export type StationsData = Record<number, Station>;

@@ -54,7 +54,6 @@
 
 		<div class="panel-container">
 			<TabPanel>
-				calos tiloco
 				<div class="crafting-station-list"><CraftingStationList /></div>
 			</TabPanel>
 		</div>

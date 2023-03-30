@@ -1,9 +1,8 @@
 import type {
 	Craftable,
-	Station,
-	StationDisplay,
 	StationHeader,
-	StationProgress
+	StationProgress,
+	StationsData
 } from 'src/types/stations.type';
 import type { StationDataRepository } from './stations_data_repository';
 import type { Writable, Readable } from 'svelte/types/runtime/store';
@@ -54,7 +53,7 @@ export class StationItemsRepository {
 			}
 		);
 	}
-	public displayedItems: Readable<StationDisplay[]>;
+	public displayedItems: Readable<Craftable[]>;
 	public maxPage: Readable<number>;
 	public currentPage: Writable<number>;
 	public craftableItems: Readable<Craftable[]>;
@@ -88,14 +87,15 @@ export class StationsRepository {
 				return [];
 			}
 			const stationList = [];
-			for (const station of $stationStore) {
-				stationList.push({
+			return Object.keys($stationStore).map((id) => {
+				const n = +id;
+				const station = $stationStore[n];
+				return {
 					id: station.id,
 					name: station.name,
 					imageUrl: station.imageUrl
-				});
-			}
-			return stationList;
+				};
+			});
 		});
 
 		this.stationItemsRepositories = {};
@@ -116,17 +116,18 @@ export class StationsRepository {
 	public stationItemsRepositories: Record<number, StationItemsRepository> = {};
 	public stationProgress: Readable<Record<number, StationProgress> | undefined>;
 	public stationIdList: Readable<StationHeader[]>;
-	private createStations(itemStore: Record<number, Item> | undefined, stationStore: Station[]) {
+	private createStations(itemStore: Record<number, Item> | undefined, stationStore: StationsData) {
 		if (itemStore == undefined) {
 			return undefined;
 		}
 		this.hasCreatedstations = true;
 		const stationProgress: Record<number, StationProgress> = {};
-		for (const station of stationStore) {
-			const R = new StationItemsRepository(station.craftables, this.itemsRepository);
-			this.stationItemsRepositories[station.id] = R;
-			if (itemStore[station.id] == undefined) {
-				stationProgress[station.id] = {
+		for (const key of Object.keys(stationStore)) {
+			const nk = +key;
+			const R = new StationItemsRepository(stationStore[nk].craftables, this.itemsRepository);
+			this.stationItemsRepositories[nk] = R;
+			if (itemStore[nk] == undefined) {
+				stationProgress[nk] = {
 					progress: 1,
 					research: 1,
 					easy: false,
@@ -134,10 +135,10 @@ export class StationsRepository {
 				};
 				continue;
 			} else {
-				stationProgress[station.id] = {
-					progress: itemStore[station.id].item_progress,
-					research: itemStore[station.id].research,
-					easy: itemStore[station.id].easy,
+				stationProgress[nk] = {
+					progress: itemStore[nk].item_progress,
+					research: itemStore[nk].research,
+					easy: itemStore[nk].easy,
 					special: false
 				};
 				continue;
@@ -152,17 +153,18 @@ export class StationsRepository {
 	}
 	private updateStations(
 		itemStore: Record<number, Item> | undefined,
-		stationStore: Station[] | undefined
+		stationStore: StationsData | undefined
 	) {
 		if (itemStore == undefined || stationStore == undefined) {
 			return undefined;
 		}
 		const stationProgress: Record<number, StationProgress> = {};
 		if (this.hasCreatedstations == false) {
-			for (const station of stationStore) {
-				this.createStore(station.id, station.craftables, this.itemsRepository);
-				if (itemStore[station.id] == undefined) {
-					stationProgress[station.id] = {
+			for (const key of Object.keys(stationStore)) {
+				const nk = +key;
+				this.createStore(nk, stationStore[nk].craftables, this.itemsRepository);
+				if (itemStore[nk] == undefined) {
+					stationProgress[nk] = {
 						progress: 1,
 						research: 1,
 						easy: false,
@@ -170,19 +172,21 @@ export class StationsRepository {
 					};
 					continue;
 				} else {
-					stationProgress[station.id] = {
-						progress: itemStore[station.id].item_progress,
-						research: itemStore[station.id].research,
-						easy: itemStore[station.id].easy,
+					stationProgress[nk] = {
+						progress: itemStore[nk].item_progress,
+						research: itemStore[nk].research,
+						easy: itemStore[nk].easy,
 						special: false
 					};
 					continue;
 				}
 			}
 		}
-		for (const station of stationStore) {
-			if (itemStore[station.id] == undefined) {
-				stationProgress[station.id] = {
+		for (const key of Object.keys(stationStore)) {
+			const nk = +key;
+			this.createStore(nk, stationStore[nk].craftables, this.itemsRepository);
+			if (itemStore[nk] == undefined) {
+				stationProgress[nk] = {
 					progress: 1,
 					research: 1,
 					easy: false,
@@ -190,10 +194,10 @@ export class StationsRepository {
 				};
 				continue;
 			} else {
-				stationProgress[station.id] = {
-					progress: itemStore[station.id].item_progress,
-					research: itemStore[station.id].research,
-					easy: itemStore[station.id].easy,
+				stationProgress[nk] = {
+					progress: itemStore[nk].item_progress,
+					research: itemStore[nk].research,
+					easy: itemStore[nk].easy,
 					special: false
 				};
 				continue;

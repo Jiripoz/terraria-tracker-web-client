@@ -2,8 +2,9 @@
 	import type { Readable, Writable } from 'svelte/types/runtime/store';
 	import PageSwitch2 from './PageSwitch2.svelte';
 	import type { StationItemsRepository } from '$lib/repositories/stations_repository';
-	import type { StationDisplay } from 'src/types/stations.type';
+	import type { Craftable } from 'src/types/stations.type';
 	import Tag from '../tabs/Tag.svelte';
+	import Elipsis from '../filters/Elipsis.svelte';
 
 	export let id: number;
 	export let name: string;
@@ -14,7 +15,7 @@
 	export let special: boolean;
 	// export let easy: boolean;
 	export let repository: StationItemsRepository;
-	let store: Readable<StationDisplay[]> | undefined;
+	let store: Readable<Craftable[]> | undefined;
 	let currentPage: Writable<number>;
 	let maxPage: Readable<number>;
 
@@ -70,10 +71,16 @@
 		</div>
 		<div class="craftable-list">
 			{#if $store}
-				{#each $store as object}
+				{#each $store as object, i}
 					<div class="craftable-row">
-						<img class="item-image" src={`${ROOT_URL}${object.imageUrl}`} alt="" />
-						<div class="item-name">{object.name}</div>
+						<div class="item-image-name">
+							<img class="item-image" src={`${ROOT_URL}${object.imageUrl}`} alt="" />
+						<div class="item-name body2">{object.name}</div>
+						</div>
+						<div class="item-progress-elipsis">
+							<div class="item-progress-research">{object.item_progress}/{object.research}</div>
+							<div><Elipsis isEasy={object.easy} research={object.research} progress={object.item_progress}/></div>
+						</div>
 					</div>
 				{/each}
 			{/if}
@@ -185,7 +192,7 @@
 		flex-grow: 1;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0px;
+		padding: 0 0.5em 0 1em
 	}
 	.page-switch {
 		display: flex;
@@ -202,10 +209,9 @@
 		grid-template-columns: repeat(2, 1fr);
 		justify-content: center;
 		align-items: flex-start;
-		flex-wrap: wrap;
 		flex-grow: 1;
 		padding: 1em;
-		gap: 0.5em;
+		gap: 0.5em 2em;
 	}
 	.item-image {
 		display: flex;
@@ -218,10 +224,36 @@
 		overflow: hidden;
 		height: 25px;
 	}
+	.item-progress-elipsis {
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: row;
+	}
+	.item-progress-research {
+		display:flex;
+		justify-content: center;
+		align-items: center;
+		margin-right: 0.5em;
+		width: 27px;
+		height: 31px;
+
+		font-family: 'Poppins';
+		font-style: normal;
+		font-weight: 700;
+		font-size: 14px;
+
+		text-align: center;
+	}
 	.craftable-row {
 		display: flex;
-		justify-content: flex-start;
+		justify-content: space-between;
 
 		flex-grow: 1;
 	}
+	.item-image-name {
+		display:flex;
+		justify-content: flex-start;
+	}
+
 </style>

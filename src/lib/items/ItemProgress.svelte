@@ -1,12 +1,21 @@
 <script lang="ts">
 	import type { Item } from 'src/types/item.type';
 	import Tag from '../components/tabs/Tag.svelte';
+	import { slide } from 'svelte/transition'
+	import ItemRecipes from './recipes/ItemRecipes.svelte';
+	import type { RecipesRepository } from '$lib/repositories/recipes_repository';
+	import { recipesRepository } from '$lib/stores/di';
+	
 
 	export let item: Item;
 	const ROOT_URL = 'https://terraria.wiki.gg/images/';
+	
+	const recipesStore = recipesRepository.itemRecipes;
+
 	let tagColor: string;
 	let tagText: string;
-
+	let size = 310;
+	
 	$: {
 		if (item.research == item.item_progress) {
 			tagColor = '#47A025';
@@ -17,6 +26,16 @@
 		} else {
 			tagColor = '#BA1B1D';
 			tagText = 'Not Researched';
+		}
+	}
+	let content = 'See Recipes'
+	let showContent = false
+	const handleClick= () =>{
+		showContent = !showContent
+		if (showContent==true){
+			content="Hide Recipes"
+		} else if (showContent==false){
+			content="See Recipes"
 		}
 	}
 </script>
@@ -34,10 +53,17 @@
 		<div class="item-name"><h5>{item.name}</h5></div>
 		<div class="caption">{item.tooltip}</div>
 	</div>
-
 	<div class="bottom-container">
-		<div class="item-property">O O O</div>
-		<div class="see-recipe">See Recipes</div>
+		<div class="interaction-container">
+			<button class="see-recipe" on:click={() => handleClick()}>{content}</button>
+		</div>
+		<div class="recipe-container">
+			{#if showContent == true && recipesStore != undefined}
+				<div class="recipe-list" transition:slide={{duration:400}}>
+					<ItemRecipes recipe={recipesStore[item.id]}></ItemRecipes>
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>
 
@@ -55,7 +81,7 @@
 		padding: 2em;
 		gap: 2em;
 		width: 360px;
-		height: 310px;
+		height: calc(var(--size)*1px);
 		box-sizing: border-box;
 		background: linear-gradient(0deg, #ffffff, #ffffff), #111111;
 		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
@@ -113,11 +139,14 @@
 	}
 	.bottom-container {
 		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
+		flex-direction: column;
 		width: 100%;
 	}
-	.item-property {
+	.interaction-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: right;
+		width: 100%;
 	}
 	.see-recipe {
 		display: flex;
@@ -127,10 +156,21 @@
 		padding: 4px 6px;
 
 		width: 105px;
-		height: 29px;
-		background: #888;
+
+		background: #58355E;
+
 		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.15);
 		border-radius: 8px;
+		border-width: 0px;
+
+		font-family: 'Poppins';
 		color: #ffffff;
+		font-style: normal;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 21px;
+	}
+	.recipe-list {
+		margin-top: 1em;
 	}
 </style>

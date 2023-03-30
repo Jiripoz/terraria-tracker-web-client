@@ -5,7 +5,6 @@
 <label class="switch">
 	<div>
 		<input type="checkbox" checked={$filterStore?.easy} on:click={easyHandler} />
-
 		<span class="slider round" />
 	</div>
 </label>
